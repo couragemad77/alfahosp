@@ -176,13 +176,91 @@
             color: var(--subtle-text-color);
             border-top: 1px solid var(--border-color);
         }
+
+        /* Added Styles for Auth and Dashboard */
+        .auth-container {
+            text-align: center;
+            padding: 3rem 0;
+        }
+        .auth-form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--surface-color);
+            border-radius: 16px;
+        }
+        .auth-form input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        .auth-form button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary-color);
+            color: var(--text-color);
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .auth-form button:hover {
+            background: var(--secondary-color);
+        }
+        #user-profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+        #logout-button {
+            background: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 1rem;
+            vertical-align: middle;
+        }
+        .modal {
+            position: fixed;
+            z-index: 101;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            background-color: var(--surface-color);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            width: 80%;
+            max-width: 500px;
+            border-radius: 16px;
+        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="container">
-            <h1>Paragonn</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>Paragonn</h1>
+                <div>
+                    <img id="user-profile-img" src="" alt="User Profile" style="display: none;">
+                    <button id="logout-button" style="display: none;">Logout</button>
+                </div>
+            </div>
             <p>Capturing Moments, Creating Memories</p>
         </div>
     </header>
@@ -193,11 +271,12 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#" id="login-nav">Login</a></li>
             </ul>
         </div>
     </nav>
 
-    <main>
+    <main id="main-content">
         <section id="about">
             <div class="container">
                 <h2>About Us</h2>
@@ -249,11 +328,64 @@
         </section>
     </main>
 
+    <div class="auth-container" id="login-container" style="display: none;">
+        <div class="auth-form">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Or</p>
+            <button id="google-login">Sign in with Google</button>
+            <p>Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
+        </div>
+    </div>
+
+    <div class="auth-container" id="signup-container" style="display: none;">
+        <div class="auth-form">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <input type="email" id="signup-email" placeholder="Email" required>
+                <input type="password" id="signup-password" placeholder="Password" required>
+                <input type="text" id="signup-phone" placeholder="Phone Number" required>
+                <input type="number" id="signup-age" placeholder="Age" required>
+                <input type="date" id="signup-dob" placeholder="Date of Birth" required>
+                <input type="text" id="signup-address" placeholder="Home Address" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+    </div>
+
+    <section id="dashboard" style="display: none;">
+        <div class="container">
+            <h2>Your Dashboard</h2>
+            <div id="dashboard-content"></div>
+        </div>
+    </section>
+
+    <div id="profile-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Profile Details</h2>
+            <div id="modal-content-details"></div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2025 Paragonn Photography. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Your custom script -->
+    <script src="app.js"></script>
 
 </body>
 </html>
